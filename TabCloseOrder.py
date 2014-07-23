@@ -1,7 +1,7 @@
 import sublime
 import sublime_plugin
 
-class WindowCommand(sublime_plugin.WindowCommand):
+class TabCloseOrder(sublime_plugin.WindowCommand):
     def onLoad(self, view):
         print view.fileName(), "just got loaded"
 

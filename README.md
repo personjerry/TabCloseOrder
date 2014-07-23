@@ -1,5 +1,5 @@
 
-# Session Saver plugin for SUBLIME 2/3
+# Tab Close Order plugin for SUBLIME 2/3
 
 
 ## Author: Jerry Liu

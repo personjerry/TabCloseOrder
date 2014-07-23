@@ -14,7 +14,7 @@ class TabCloseOrder(sublime_plugin.EventListener):
         self.activewindow = view.window()
         if self.activewindow.id() not in self.viewlist:
             print ("window not in repository, adding")
-            self.viewlist[self.activewindow.id()] = list(map(operator.methodcaller('id'), self.activewindow.views()))
+            self.viewlist[self.activewindow.id()] = self.activewindow.views()
             print (self.viewlist)
 
         if view in self.viewlist[self.activewindow.id()]:

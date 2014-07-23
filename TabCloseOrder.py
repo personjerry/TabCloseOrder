@@ -1,5 +1,6 @@
 import sublime
 import sublime_plugin
+import operator
 
 class TabCloseOrder(sublime_plugin.EventListener):
     def __init__(self):

@@ -5,20 +5,19 @@ import operator
 class TabCloseOrder(sublime_plugin.EventListener):
     def __init__(self):
         self.viewlist = {}
+        self.activewindow = None
 
     def on_activated(self, view):
-        window = view.window().id()
-        if window not in self.viewlist:
-            self.viewlist[window] = list(map(operator.methodcaller('id'), view.window().views()))
+        self.activewindow = view.window()
+        if self.activewindow.id() not in self.viewlist:
+            self.viewlist[self.activewindow.id()] = list(map(operator.methodcaller('id'), activewindow.views()))
 
-        if view in self.viewlist[window]:
-            self.viewlist[window].remove(view)
+        if view in self.viewlist[self.activewindow.id()]:
+            self.viewlist[self.activewindow.id()].remove(view)
 
-        self.viewlist[window].append(view)
+        self.viewlist[self.activewindow.id()].append(view)
 
     def on_close(self, view):
-        print (view)
-        window = view.window().id()
-        if view in self.viewlist[window]:
-            self.viewlist[window].remove(view)
-        view.window().focus_view(self.viewlist[window][-1])
+        if view in self.viewlist[self.activewindow.id()]:
+            self.viewlist[self.activewindow.id()].remove(view)
+        self.activewindow.focus_view(self.viewlist[self.activewindow.id()][-1])

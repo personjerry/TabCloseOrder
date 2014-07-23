@@ -2,26 +2,26 @@ import sublime
 import sublime_plugin
 
 class TabCloseOrder(sublime_plugin.EventListener):
-    def onLoad(self, view):
+    def on_load(self, view):
         print view.fileName(), "just got loaded"
 
-    def onPreSave(self, view):
+    def on_pre_save(self, view):
         print view.fileName(), "is about to be saved"
 
-    def onPostSave(self, view):
+    def on_post_save(self, view):
         print view.fileName(), "just got saved"
         
-    def onNew(self, view):
+    def on_new(self, view):
         print "new file"
 
-    def onModified(self, view):
+    def on_modified(self, view):
         print view.fileName(), "modified"
 
-    def onActivated(self, view):
+    def on_activated(self, view):
         print view.fileName(), "is now the active view"
 
-    def onClose(self, view):
+    def on_close(self, view):
         print view.fileName(), "is no more"
 
-    def onClone(self, view):
+    def on_clone(self, view):
         print view.fileName(), "just got cloned"

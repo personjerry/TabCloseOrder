@@ -5,32 +5,20 @@ import operator
 class TabCloseOrder(sublime_plugin.EventListener):
     def __init__(self):
         self.viewlist = {}
-        self.activewindow = None
-        # print ("initialized")
 
     def on_activated(self, view):
-        # print ("new window activated")
-        # print (self.viewlist)
-        self.activewindow = view.window()
-        if self.activewindow.id() not in self.viewlist:
-            # print ("window not in repository, adding")
-            self.viewlist[self.activewindow.id()] = self.activewindow.views()
-            # print (self.viewlist)
+        window = view.window()
+        if window not in self.viewlist:
+            self.viewlist[window] = self.activewindow.views()
 
-        if view in self.viewlist[self.activewindow.id()]:
-            # print ("removed self from viewlist")
-            self.viewlist[self.activewindow.id()].remove(view)
-            # print (self.viewlist)
+        if view in self.viewlist[window]:
+            self.viewlist[window].remove(view)
 
-        # print ("adding self to viewlist")
-        self.viewlist[self.activewindow.id()].append(view)
-        # print (self.viewlist)
+        self.viewlist[window].append(view)
 
-    def on_deactivated(self, view):
-        # print ("closed view")
-        # print (self.viewlist)
-        if view.window() == None
-            if view in self.viewlist[self.activewindow.id()]:
-                self.viewlist[self.activewindow.id()].remove(view)
-            # print (view.window())
-            self.activewindow.focus_view(self.viewlist[self.activewindow.id()][-1])
+    def on_closed(self, view):
+        for window in self.viewlist.keys:
+            if view in self.viewlist[window]:
+                self.viewlist[window].remove(view)
+                window.focus_view(self.viewlist[window][-1])
+                return

@@ -2,16 +2,26 @@ import sublime
 import sublime_plugin
 
 class WindowCommand(sublime_plugin.WindowCommand):
-	def run(self):
-		self.viewlist = []
+    def onLoad(self, view):
+        print view.fileName(), "just got loaded"
 
-	def onNew(view):
-		self.viewlist += view
+    def onPreSave(self, view):
+        print view.fileName(), "is about to be saved"
 
-	def onActivated(view):
-		if view in self.viewlist:
-			self.viewlist.remove(view)
+    def onPostSave(self, view):
+        print view.fileName(), "just got saved"
+        
+    def onNew(self, view):
+        print "new file"
 
-	def onClose(view):
-		self.viewlist.remove(view)
-		self.window.focus_view(viewlist[-1])
+    def onModified(self, view):
+        print view.fileName(), "modified"
+
+    def onActivated(self, view):
+        print view.fileName(), "is now the active view"
+
+    def onClose(self, view):
+        print view.fileName(), "is no more"
+
+    def onClone(self, view):
+        print view.fileName(), "just got cloned"

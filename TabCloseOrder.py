@@ -29,7 +29,7 @@ class TabCloseOrder(sublime_plugin.EventListener):
     def on_deactivated(self, view):
         # print ("closed view")
         # print (self.viewlist)
-        if self.window() == None
+        if view.window() == None
             if view in self.viewlist[self.activewindow.id()]:
                 self.viewlist[self.activewindow.id()].remove(view)
             # print (view.window())

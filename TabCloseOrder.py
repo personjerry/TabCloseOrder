@@ -2,7 +2,7 @@ import sublime
 import sublime_plugin
 
 class TabCloseOrder(sublime_plugin.EventListener):
-	def on_run:
+	def __init__(self):
 		self.viewlist = {}
 
     def on_activated(self, view):

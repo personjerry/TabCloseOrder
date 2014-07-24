@@ -1,28 +1,31 @@
 import sublime
 import sublime_plugin
+import operator
 
 class TabCloseOrder(sublime_plugin.EventListener):
     def __init__(self):
         self.viewlist = {}
-        self.activewindow = None
 
     def on_activated(self, view):
-        self.activewindow = view.window()
-        if self.activewindow.id() not in self.viewlist:
-            self.viewlist[self.activewindow.id()] = self.activewindow.views()
+        window = view.window().id()
+        if window not in self.viewlist:
+            self.viewlist[window] = list(map(operator.methodcaller('id'), view.window().views()))
 
-        if view in self.viewlist[self.activewindow.id()]:
-            self.viewlist[self.activewindow.id()].remove(view)
+        if view.id() in self.viewlist[window]:
+            self.viewlist[window].remove(view.id())
 
-        self.viewlist[self.activewindow.id()].append(view)
+        self.viewlist[window].append(view.id())
 
     def on_close(self, view):
-        if view in self.viewlist[self.activewindow.id()]:
-            self.viewlist[self.activewindow.id()].remove(view)
-        sublime.set_timeout(self.focus, 0.100)
+        for window in self.viewlist.keys:
+            if view.id() in self.viewlist[window]:
+                self.viewlist[window].remove(view.id())
+        for window in sublime.windows():
+            if window.get_view_index(view.id()) != -1:
+                result = window.get_view_index(self.viewlist[window.id()][-1])
+                window.focus_view(result[0][result[1]])
 
-    def focus(self):
-        print ("attempt to set focus of ", self.activewindow, " to ", self.viewlist[self.activewindow.id()][-1])
-        self.activewindow.focus_view(self.viewlist[self.activewindow.id()][-1])
-        self.activewindow = None
+
+
+
 

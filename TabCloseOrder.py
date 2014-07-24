@@ -19,7 +19,7 @@ class TabCloseOrder(sublime_plugin.EventListener):
     def on_close(self, view):
         if view in self.viewlist[self.activewindow.id()]:
             self.viewlist[self.activewindow.id()].remove(view)
-        sublime.setTimeout(self.focus, 0.100)
+        sublime.set_timeout(self.focus, 0.100)
 
     def focus(self):
         self.activewindow.focus_view(self.viewlist[self.activewindow.id()][-1])

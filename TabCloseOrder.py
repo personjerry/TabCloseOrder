@@ -12,7 +12,7 @@ class TabCloseOrder(sublime_plugin.EventListener):
         if window not in self.viewlist:
             self.viewlist[window] = list(map(operator.methodcaller('id'), view.window().views()))
 
-        if self.closedview >= 0 && self.closedview in self.viewlist[window]:
+        if self.closedview >= 0 and self.closedview in self.viewlist[window]:
             self.closedview = -1
             for v in view.window().views():
                 if v.id() == self.viewlist[window][-1]:

@@ -22,7 +22,7 @@ class TabCloseOrder(sublime_plugin.EventListener):
         sublime.set_timeout(self.focus, 0.100)
 
     def focus(self):
-        print ("attempt to set focus of ", activewindow, " to ", self.viewlist[self.activewindow.id()][-1])
+        print ("attempt to set focus of ", self.activewindow, " to ", self.viewlist[self.activewindow.id()][-1])
         self.activewindow.focus_view(self.viewlist[self.activewindow.id()][-1])
         self.activewindow = None
 

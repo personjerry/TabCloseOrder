@@ -1,27 +1,27 @@
 import sublime
 import sublime_plugin
-import operator
 
 class TabCloseOrder(sublime_plugin.EventListener):
     def __init__(self):
         self.viewlist = {}
-        self.closedview = -1
+        self.activewindow = None
 
     def on_activated(self, view):
-        window = view.window().id()
-        if window not in self.viewlist:
-            self.viewlist[window] = list(map(operator.methodcaller('id'), view.window().views()))
+        self.activewindow = view.window()
+        if self.activewindow.id() not in self.viewlist:
+            self.viewlist[self.activewindow.id()] = self.activewindow.views()
 
-        if self.closedview >= 0 and self.closedview in self.viewlist[window]:
-            self.closedview = -1
-            for v in view.window().views():
-                if v.id() == self.viewlist[window][-1]:
-                    view.window().focus_view(v)
+        if view in self.viewlist[self.activewindow.id()]:
+            self.viewlist[self.activewindow.id()].remove(view)
 
-        if view.id() in self.viewlist[window]:
-            self.viewlist[window].remove(view.id())
-
-        self.viewlist[window].append(view.id())
+        self.viewlist[self.activewindow.id()].append(view)
 
     def on_close(self, view):
-        self.closedview = view.id()
+        if view in self.viewlist[self.activewindow.id()]:
+            self.viewlist[self.activewindow.id()].remove(view)
+        sublime.setTimeout(self.focus, 0.100)
+
+    def focus(self):
+        self.activewindow.focus_view(self.viewlist[self.activewindow.id()][-1])
+        self.activewindow = None
+

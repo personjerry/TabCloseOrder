@@ -28,7 +28,7 @@ class TabCloseOrder(sublime_plugin.EventListener):
                         sublime_window = window
                         break
                 sublime_view = None
-                if self.view_list.len() > 1:
+                if len(self.view_list) > 1:
                     for potential_view in sublime_window.views():
                         if potential_view.id() == self.view_list[window_id][-2]:
                             sublime_view = potential_view

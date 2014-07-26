@@ -15,6 +15,8 @@ class TabCloseOrder(sublime_plugin.EventListener):
             self.view_list[window_id].remove(view.id())
 
         self.view_list[window_id].append(view.id())
+        for key in self.view_list:
+            print (self.view_list[key])
 
     def on_close(self, view):
         for window_id in self.view_list:

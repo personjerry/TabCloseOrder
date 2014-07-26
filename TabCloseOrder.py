@@ -18,8 +18,6 @@ class TabCloseOrder(sublime_plugin.EventListener):
             self.view_list[window_id].remove(view.id())
 
         self.view_list[window_id].append(view.id())
-        for key in self.view_list:
-            print (self.view_list[key])
 
     def on_close(self, view):
         self.view_list = self.backup_list
@@ -37,7 +35,6 @@ class TabCloseOrder(sublime_plugin.EventListener):
                         sublime_view = potential_view
                         break
                 if sublime_window and sublime_view:
-                    print ("attempting window ", sublime_window.id(), " with ", sublime_view.id())
                     sublime_window.focus_view(sublime_view)
 
 

@@ -32,14 +32,13 @@ class TabCloseOrder(sublime_plugin.EventListener):
                         sublime_window = window
                         break
                 sublime_view = None
-                if len(self.view_list[window_id]) > 1:
-                    for potential_view in sublime_window.views():
-                        if potential_view.id() == self.view_list[window_id][-2]:
-                            sublime_view = potential_view
-                            break
-                    if sublime_window and sublime_view:
-                        print ("attempting window ", sublime_window.id(), " with ", sublime_view.id())
-                        sublime_window.focus_view(sublime_view)
+                for potential_view in sublime_window.views():
+                    if potential_view.id() == self.view_list[window_id][-1]:
+                        sublime_view = potential_view
+                        break
+                if sublime_window and sublime_view:
+                    print ("attempting window ", sublime_window.id(), " with ", sublime_view.id())
+                    sublime_window.focus_view(sublime_view)
 
 
 
